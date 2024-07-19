@@ -1,0 +1,28 @@
+name: gen data for data source
+
+# 控制工作流触发的事件
+on:
+  workflow_dispatch: # 手动触发工作流
+
+jobs:
+  build-and-deploy:
+    runs-on: self-hosted
+    # 指定运行器的标签，确保与你的 runner 标签相匹配
+    tags:
+      - x86
+      - linux
+
+    steps:
+      # 检出代码
+      - uses: actions/checkout@v2
+
+      # 设置运行环境
+      - name: Setup Environment
+        run: |
+          make all
+
+      # 运行 create_table 脚本
+      - name: Run create_table script
+        run: |
+          # 这里假设 create_table 脚本位于仓库的根目录
+          ./gen_data
