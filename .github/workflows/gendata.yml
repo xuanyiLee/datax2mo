@@ -6,12 +6,7 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: self-hosted
-    # 指定运行器的标签，确保与你的 runner 标签相匹配
-    tags:
-      - x86
-      - linux
-
+    runs-on: [self-hosted,Linux,X64]
     steps:
       # 检出代码
       - uses: actions/checkout@v2
