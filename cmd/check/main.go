@@ -2,12 +2,16 @@ package main
 
 import (
 	"datax/conf"
+	"datax/pkg"
 	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"os"
 	"strings"
 )
+
+var mysqlCnf conf.MysqlConf
+var moCnf conf.MysqlConf
 
 func main() {
 	cfg := conf.NewConf("./conf/matrixone.ini")
@@ -16,6 +20,10 @@ func main() {
 		panic(err)
 	}
 
+	mysqlCnf = conf.MyCnf
+	moCnf = conf.MoConf
+
+	mysqlCnf.Password, moCnf.Password = pkg.GetPwd()
 	mysqlConn, err := getDBConn("mysql")
 	if err != nil {
 		os.Exit(1)
@@ -46,9 +54,9 @@ func getDBConn(dataSource string) (*gorm.DB, error) {
 	var cnf conf.MysqlConf
 	switch dataSource {
 	case "mysql":
-		cnf = conf.MyCnf
+		cnf = mysqlCnf
 	case "matrixone":
-		cnf = conf.MoConf
+		cnf = moCnf
 	}
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local", cnf.Username, cnf.Password, cnf.HOST, cnf.Port, cnf.DataBase) //MO
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})

@@ -38,8 +38,9 @@ func Cmd(command string, arg ...string) {
 func Cmd_ctl_output(command string, operate string, arg ...string) {
 	cmd := exec.Command(command, arg...)
 
-	myCnf := conf.MyCnf
 	if operate == "load_data" {
+		myCnf := conf.MyCnf
+		myCnf.Password, _ = GetPwd()
 		cmd.Env = append(os.Environ(), "HOST="+myCnf.HOST, "PORT="+strconv.Itoa(myCnf.Port), "USER="+myCnf.Username, "PASSWORD="+myCnf.Password, "DB="+myCnf.DataBase)
 	}
 

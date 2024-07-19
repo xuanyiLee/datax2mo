@@ -2,6 +2,7 @@ package main
 
 import (
 	"datax/conf"
+	"datax/pkg"
 	"fmt"
 	"os"
 	"os/exec"
@@ -20,6 +21,7 @@ func main() {
 	mysqlCnf = conf.MyCnf
 	moCnf = conf.MoConf
 
+	mysqlCnf.Password, moCnf.Password = pkg.GetPwd()
 	switch cfg.Type {
 	case "ssb":
 		create_table("./ssb/bin/create-ssb-tables.sh")
