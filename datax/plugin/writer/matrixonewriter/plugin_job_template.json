@@ -1,0 +1,19 @@
+{
+    "name": "matrixonewriter",
+    "parameter": {
+        "username": "",
+        "password": "",
+        "column": [],
+        "preSql": [],
+        "postSql": [],
+        "maxBatchRows": 60000,
+        "maxBatchSize": 5242880,
+        "connection": [
+            {
+                "jdbcUrl": "",
+                "database": "",
+                "table": []
+            }
+        ]
+    }
+}

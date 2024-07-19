@@ -1,0 +1,55 @@
+{
+  "job": {
+    "setting": {
+      "speed": {
+        "channel": 8
+      }
+    },
+    "content": [
+      {
+        "reader": {
+          "name": "mysqlreader",
+          "parameter": {
+            "username": "${r_username}",
+            "password": "${r_password}",
+            "column": [
+              '*'
+            ],
+            "splitPk": "${splitkey}",
+	    "connection": [
+              {
+                "table": [
+                  "${table}"
+                ],
+                "jdbcUrl": [
+                  "jdbc:mysql://${r_ip}:${r_port}/${r_dbname}?useSSL=false"
+                ]
+              }
+            ]
+          }
+        },
+        "writer": {
+          "name": "matrixonewriter",
+          "parameter": {
+            "preSql": ["truncate table ${table};"],
+            "writeMode": "insert",
+            "username": "${w_username}",
+            "password": "${w_password}",
+            "column": [
+              '*'
+            ],
+            "connection": [
+              {
+                "jdbcUrl": "jdbc:mysql://${w_ip}:${w_port}/${w_dbname}?useSSL=false",
+                "database": "${w_dbname}",
+                "table": [
+                          "${table}"
+                        ]
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}
