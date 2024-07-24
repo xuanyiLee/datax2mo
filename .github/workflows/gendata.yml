@@ -14,7 +14,7 @@ jobs:
       # 设置运行环境
       - name: Setup Environment
         run: |
-          make all
+          make grant_priv
 
       # 运行 create_table 脚本
       - name: Run create_table script
