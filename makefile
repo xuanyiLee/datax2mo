@@ -8,4 +8,4 @@ build:
 	cd ./cmd/load_data && go build && mv load_data ../../
 
 grant_priv:
-	chmod -R 0755 ./ssb/bin && chmod -R 0755 ./tpch/bin && chmod -R 0755 ./tpcc/bin && chmod -R 0755 ./tpcds/bin
+	chmod -R 0755 ./ssb/bin ./tpch/bin ./tpcc/bin ./tpcds/bin check create_table transfer gen_data load_data
