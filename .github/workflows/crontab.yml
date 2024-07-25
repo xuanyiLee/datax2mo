@@ -1,15 +1,32 @@
-name: Scheduled Task
+name: transfer data from mysql to matrixone with datax
 
+# 控制工作流触发的事件
 on:
+  workflow_dispatch: # 手动触发工作流
   schedule:
     # 每小时运行一次工作流程
-    - cron: '30 2 * * *'
+    - cron: '0 16 * * *'
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  build-and-deploy:
+    runs-on: self-hosted
     steps:
-    - uses: actions/checkout@v2
+      # 检出代码
+      - uses: actions/checkout@v2
 
-    - name: Run task
-      run: echo "This task runs every hour."
+      # 设置运行环境
+      - name: Setup Environment
+        run: |
+          make grant_priv
+
+      # 运行清空脚本
+      - name: Run clear data script
+        run: ./clear -source matrixone -password ${{secrets.MOPWD}}
+
+      # 运行迁移脚本
+      - name: Run transfer data script
+        run: ./transfer -mysqlPwd ${{secrets.MYSQLPWD}} -moPwd ${{secrets.MOPWD}}
+
+      # 运行检测脚本
+      - name: Run check script
+        run: ./check -mysqlPwd ${{secrets.MYSQLPWD}} -moPwd ${{secrets.MOPWD}}
