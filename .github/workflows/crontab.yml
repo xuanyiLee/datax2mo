@@ -9,7 +9,7 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: self-hosted
+    runs-on: [self-hosted,mo]
     steps:
       # 检出代码
       #- uses: actions/checkout@v2
