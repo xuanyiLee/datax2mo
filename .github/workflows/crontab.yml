@@ -25,7 +25,9 @@ jobs:
 
       # 运行迁移脚本
       - name: Run transfer data script
-        run: ./transfer -mysqlPwd ${{secrets.MYSQLPWD}} -moPwd ${{secrets.MOPWD}}
+        run: |
+          source  /etc/profile
+          ./transfer -mysqlPwd ${{secrets.MYSQLPWD}} -moPwd ${{secrets.MOPWD}}
 
       # 运行检测脚本
       - name: Run check script
