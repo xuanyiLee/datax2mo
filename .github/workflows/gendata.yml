@@ -15,8 +15,8 @@ jobs:
         run: |
           make grant_priv
       # 运行清空脚本
-      #- name: Run clear data script
-      #  run: ./clear -source mysql -password ${{secrets.MYSQLPWD}}
+      - name: Run clear data script
+        run: ./clear -source mysql -password ${{secrets.MYSQLPWD}}
       # 运行生成数据脚本
       - name: Run generate data script
         run: |
