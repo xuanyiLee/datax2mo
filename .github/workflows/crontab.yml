@@ -19,10 +19,6 @@ jobs:
         run: |
           make grant_priv
 
-      # 运行清空脚本
-      - name: Run clear data script
-        run: ./clear -source matrixone -password ${{secrets.MOPWD}}
-
       # 运行迁移脚本
       - name: Run transfer data script
         run: |
