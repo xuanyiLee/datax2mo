@@ -6,23 +6,22 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: self-hosted
+    runs-on: [self-hosted,mo]
     steps:
       # 检出代码
-      - uses: actions/checkout@v2
+      #- uses: actions/checkout@v2
       # 设置运行环境
       - name: Setup Environment
         run: |
           make grant_priv
-          source  /etc/profile
       # 运行清空脚本
       - name: Run clear data script
         run: ./clear -source mysql -password ${{secrets.MYSQLPWD}}
       # 运行生成数据脚本
       - name: Run generate data script
-        run: ./gen_data
+        run: |
+          source  /etc/profile
+          ./gen_data
       # 运行导入数据脚本
       - name: Run load data script
         run: ./load_data -mysqlPwd ${{secrets.MYSQLPWD}} -moPwd ${{secrets.MOPWD}}
-
-
