@@ -9,11 +9,12 @@ import (
 	"os"
 	"os/exec"
 	"strconv"
+	"strings"
 )
 
 func GetPwd() (mysqlPwd string, moPwd string) {
-	flag.StringVar(&mysqlPwd, "mysqlPwd", "", "password of mysql database")
-	flag.StringVar(&moPwd, "moPwd", "", "password of matrixone database")
+	flag.StringVar(&mysqlPwd, "mysqlPwd", "1Qaz2wsx.", "password of mysql database")
+	flag.StringVar(&moPwd, "moPwd", "1Qaz2wsx", "password of matrixone database")
 	flag.Parse()
 
 	if mysqlPwd == "" || moPwd == "" {
@@ -35,7 +36,7 @@ func Cmd(command string, arg ...string) {
 	fmt.Println(string(output))
 }
 
-func Cmd_ctl_output(command string, operate string, arg ...string) {
+func Cmd_ctl_output(command string, operate string, arg ...string) float64 {
 	cmd := exec.Command(command, arg...)
 
 	if operate == "load_data" {
@@ -75,6 +76,16 @@ func Cmd_ctl_output(command string, operate string, arg ...string) {
 			os.Exit(1)
 		}
 		fmt.Print(line)
+		if operate == "tpcc_query" {
+			if strings.Contains(line, "Measured tpmC") {
+				arr := strings.Split(line, "=")
+				result, err := strconv.ParseFloat(strings.TrimSpace(arr[1]), 64)
+				if err != nil {
+					fmt.Println(err)
+				}
+				return result
+			}
+		}
 	}
 
 	// 创建一个bufio.Reader来逐行读取输出
@@ -96,4 +107,6 @@ func Cmd_ctl_output(command string, operate string, arg ...string) {
 		fmt.Println(fmt.Sprintf("wait cmd run error: %v", err))
 		os.Exit(1)
 	}
+
+	return 0
 }

@@ -98,7 +98,7 @@ mysql -h"${HOST}" -u"${USER}" -P"${PORT}" -e "CREATE DATABASE IF NOT EXISTS ${DB
 echo "Run DDL from ${SSB_DDL}"
 mysql -h"${HOST}" -u"${USER}" -P"${PORT}" -D"${DB}" <"${SSB_DDL}"
 
-echo "Run DDL from ${SSB_FLAT_DDL}"
-mysql -h"${HOST}" -u"${USER}" -P"${PORT}" -D"${DB}" <"${SSB_FLAT_DDL}"
+#echo "Run DDL from ${SSB_FLAT_DDL}"
+#mysql -h"${HOST}" -u"${USER}" -P"${PORT}" -D"${DB}" <"${SSB_FLAT_DDL}"
 
 echo "ssb tables has been created"

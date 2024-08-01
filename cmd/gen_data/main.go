@@ -19,7 +19,7 @@ func main() {
 	case "tpch":
 		datax2mo.Cmd_ctl_output("./tpch/bin/gen-tpch-data.sh", "gen_data", "-s", cfg.Scale)
 	case "tpcc":
-		datax2mo.Cmd_ctl_output("./tpcc/bin/runLoader.sh", "gen_data", "./tpcc/props.mo", "filelocation", "./tpcc/bin/data/")
+		datax2mo.Cmd_ctl_output("./tpcc/bin/runLoader.sh", "gen_data", "./tpcc/mysql.mo", "filelocation", "./tpcc/bin/data/")
 	case "tpcds":
 		datax2mo.Cmd_ctl_output("./tpcds/bin/gen-tpcds-data.sh", "gen_data", "-s", cfg.Scale)
 	}

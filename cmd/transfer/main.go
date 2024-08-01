@@ -20,15 +20,15 @@ func main() {
 
 	limit := make(chan struct{}, 5)
 	tableArr := strings.Split(cfg.Tables, ",")
-	keyArr := strings.Split(cfg.SplitKey, ",")
+	columns := strings.Split(cfg.Columns, "|")
+	//keyArr := strings.Split(cfg.SplitKey, ",")
 	var wg sync.WaitGroup
-
 	for i, table := range tableArr {
 		wg.Add(1)
 		go func(i int, table string) {
 			defer wg.Done()
-			arg := fmt.Sprintf("-Dsplitkey=%s -Dr_ip=%s -Dr_port=%d -Dr_username=%s -Dr_password=%s -Dr_dbname=%s -Dtable=%s -Dw_ip=%s -Dw_port=%d -Dw_username=%s -Dw_password=%s -Dw_dbname=%s", keyArr[i], conf.MyCnf.HOST, conf.MyCnf.Port, conf.MyCnf.Username, mysqlPwd, conf.MyCnf.DataBase, table, conf.MoConf.HOST, conf.MoConf.Port, conf.MoConf.Username, moPwd, conf.MoConf.DataBase)
-			fmt.Println(arg)
+			//arg := fmt.Sprintf("-Dsplitkey=%s -Dr_ip=%s -Dr_port=%d -Dr_username=%s -Dr_password=%s -Dr_dbname=%s -Dtable=%s -Dw_ip=%s -Dw_port=%d -Dw_username=%s -Dw_password=%s -Dw_dbname=%s", keyArr[i], conf.MyCnf.HOST, conf.MyCnf.Port, conf.MyCnf.Username, mysqlPwd, conf.MyCnf.DataBase, table, conf.MoConf.HOST, conf.MoConf.Port, conf.MoConf.Username, moPwd, conf.MoConf.DataBase)
+			arg := fmt.Sprintf("-Dcolumns='%s' -Dr_ip=%s -Dr_port=%d -Dr_username=%s -Dr_password=%s -Dr_dbname=%s -Dtable=%s -Dw_ip=%s -Dw_port=%d -Dw_username=%s -Dw_password=%s -Dw_dbname=%s", columns[i], conf.MyCnf.HOST, conf.MyCnf.Port, conf.MyCnf.Username, mysqlPwd, conf.MyCnf.DataBase, table, conf.MoConf.HOST, conf.MoConf.Port, conf.MoConf.Username, moPwd, conf.MoConf.DataBase)
 			limit <- struct{}{}
 			args := []string{
 				"./datax/bin/datax.py",
@@ -36,8 +36,8 @@ func main() {
 				"-p",
 				arg,
 			}
-
 			datax2mo.Cmd_ctl_output("python", "", args...)
+
 			<-limit
 		}(i, table)
 	}

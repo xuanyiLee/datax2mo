@@ -6,6 +6,7 @@ build:
 	cd ./cmd/transfer && go build && mv transfer ../../
 	cd ./cmd/gen_data && go build && mv gen_data ../../
 	cd ./cmd/load_data && go build && mv load_data ../../
+	cd ./cmd/clear && go build && mv clear ../../
 
 grant_priv:
-	chmod -R 0755 ./ssb/bin ./tpch/bin ./tpcc/bin ./tpcds/bin check create_table transfer gen_data load_data
+	chmod -R 0755 ./ssb/bin ./tpch/bin ./tpcc/bin ./tpcds/bin check create_table transfer gen_data load_data clear

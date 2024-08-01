@@ -13,9 +13,8 @@
             "username": "${r_username}",
             "password": "${r_password}",
             "column": [
-              '*'
+              "${columns}"
             ],
-            "splitPk": "${splitkey}",
 	    "connection": [
               {
                 "table": [
@@ -36,7 +35,7 @@
             "username": "${w_username}",
             "password": "${w_password}",
             "column": [
-              '*'
+              "${columns}"
             ],
             "connection": [
               {
