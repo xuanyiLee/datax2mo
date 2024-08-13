@@ -30,7 +30,7 @@
         "writer": {
           "name": "matrixonewriter",
           "parameter": {
-            "preSql": ["truncate table ${table};"],
+            "preSql": ["truncate table `${table}`;"],
             "writeMode": "insert",
             "username": "${w_username}",
             "password": "${w_password}",
